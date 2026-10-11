@@ -1,7 +1,7 @@
 {
-  "name": "luau-lsp-custom",
-  "displayName": "Luau Language Server Fork",
-  "description": "A Language Server Client for Luau",
+  "name": "luau-exploit-lsp",
+  "displayName": "Luau Exploit LSP",
+  "description": "Luau language support, modded for exploiters",
   "author": "veser",
   "publisher": "veser",
   "license": "MIT",
