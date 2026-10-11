@@ -11,9 +11,9 @@
       "request": "launch",
       "args": [
         "--disable-extensions",
-        "--extensionDevelopmentPath=${workspaceFolder}/editors/code"
+        "--extensionDevelopmentPath=${workspaceFolder}/extension"
       ],
-      "outFiles": ["${workspaceFolder}/editors/code/dist/**/*.js"],
+      "outFiles": ["${workspaceFolder}/extension/dist/**/*.js"],
       "preLaunchTask": "npm: compile",
       "env": {
         "LUAU_LSP_SERVER_PATH": "${workspaceFolder}/${input:binaryPath}/luau-lsp"
@@ -30,12 +30,12 @@
       "request": "launch",
       "args": [
         "--disable-extensions",
-        "--extensionDevelopmentPath=${workspaceFolder}/editors/code"
+        "--extensionDevelopmentPath=${workspaceFolder}/extension"
       ],
       "env": {
         "CMAKE_BUILD_TYPE": "${command:cmake.buildType}"
       },
-      "outFiles": ["${workspaceFolder}/editors/code/dist/**/*.js"],
+      "outFiles": ["${workspaceFolder}/extension/dist/**/*.js"],
       "preLaunchTask": "Build Server and Extension"
     },
     {
@@ -43,11 +43,11 @@
       "type": "extensionHost",
       "request": "launch",
       "args": [
-        "--extensionDevelopmentPath=${workspaceFolder}/editors/code",
-        "--extensionTestsPath=${workspaceFolder}/editors/code/dist/test/suite/index",
-        "${workspaceFolder}/editors/code/testFixture"
+        "--extensionDevelopmentPath=${workspaceFolder}/extension",
+        "--extensionTestsPath=${workspaceFolder}/extension/dist/test/suite/index",
+        "${workspaceFolder}/extension/testFixture"
       ],
-      "outFiles": ["${workspaceFolder}/editors/code/dist/**/*.js"],
+      "outFiles": ["${workspaceFolder}/extension/dist/**/*.js"],
       "preLaunchTask": "tasks: watch-tests"
     },
     {
