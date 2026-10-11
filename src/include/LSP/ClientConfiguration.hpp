@@ -10,8 +10,10 @@ struct ClientDiagnosticsConfiguration
     bool workspace = false;
     /// Whether to use expressive DM types in the diagnostics typechecker
     bool strictDatamodelTypes = false;
+    /// Whether to use no-check mode by default for files without an explicit mode directive
+    bool defaultNoCheck = false;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ClientDiagnosticsConfiguration, includeDependents, workspace, strictDatamodelTypes)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ClientDiagnosticsConfiguration, includeDependents, workspace, strictDatamodelTypes, defaultNoCheck)
 
 struct ClientRobloxSourcemapConfiguration
 {

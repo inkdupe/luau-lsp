@@ -320,6 +320,10 @@ const startLanguageServer = async (context: vscode.ExtensionContext) => {
     }
   }
 
+  addArg(
+    `--definitions:@custom=${vscode.Uri.joinPath(context.extensionUri, "typedefs", "custom.d.luau").fsPath}`,
+  );
+
   // Load extra documentation files
   for (let documentationPath of result.documentationFiles) {
     documentationPath = utils.resolvePath(documentationPath);
@@ -577,7 +581,7 @@ const startLanguageServer = async (context: vscode.ExtensionContext) => {
     vscode.commands.registerCommand("luau-lsp.openWalkthrough", () => {
       return vscode.commands.executeCommand(
         "workbench.action.openWalkthrough",
-        "JohnnyMorganz.luau-lsp#getting-started",
+        "veser.luau-lsp#getting-started",
         false,
       );
     }),

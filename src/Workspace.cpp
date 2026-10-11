@@ -694,6 +694,10 @@ void WorkspaceFolder::setupWithConfiguration(const ClientConfiguration& configur
 
     client->sendTrace("workspace: apply platform-specific configuration");
 
+    fileResolver.defaultConfig.mode = configuration.diagnostics.defaultNoCheck
+        ? Luau::Mode::NoCheck
+        : Luau::Mode::Nonstrict;
+
     platform->setupWithConfiguration(configuration);
 
     // Configure plugins
