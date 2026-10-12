@@ -160,6 +160,10 @@ void WorkspaceFolder::endAutocompletion(const lsp::CompletionParams& params)
     std::vector<lsp::TextEdit> edits;
     bool moveCursorUp = false;
 
+    bool needsIndentUnit = false;
+    lsp::Position indentPosition{0, 0};
+    std::string pendingClosingText;
+
     if (parentNode)
     {
         if (auto* statIf = parentNode->as<Luau::AstStatIf>(); statIf && statIf->condition && !statIf->thenLocation)
@@ -183,6 +187,11 @@ void WorkspaceFolder::endAutocompletion(const lsp::CompletionParams& params)
             edits.emplace_back(lsp::TextEdit{{doLocation, doLocation}, " do"});
         }
     }
+
+    client->sendLogMessage(lsp::MessageType::Info,
+        "endAutocompletion: line=" + std::to_string(params.position.line) + " lineCount=" + std::to_string(document->lineCount()) +
+            " closingNeeded=" + (closing != ClosingKeyword::None ? "yes" : "no") +
+            " cursorLineLength=" + std::to_string(document->getLine(params.position.line).size()));
 
     if (closing != ClosingKeyword::None)
     {
@@ -226,20 +235,75 @@ void WorkspaceFolder::endAutocompletion(const lsp::CompletionParams& params)
         // If its in the middle of the file, vscode won't change the marker
         if (currentLineContent.empty() && params.position.line == document->lineCount() - 1)
         {
-            // Keep the already indented cursor line, and only append the closing keyword after it
             auto rawLine = document->getLine(params.position.line);
             lsp::Position endOfLine{params.position.line, static_cast<uint32_t>(rawLine.size())};
-            edits.emplace_back(lsp::TextEdit{{endOfLine, endOfLine}, "\n" + indent + closingKeyword});
+
+            if (rawLine.size() <= indent.size())
+            {
+                // VS Code did not indent the new line, so we need the user's indent unit.
+                // We have to ask the editor for it, so the edit is applied later in a callback.
+                needsIndentUnit = true;
+                indentPosition = endOfLine;
+                pendingClosingText = "\n" + indent + closingKeyword;
+            }
+            else
+            {
+                // Keep the already indented cursor line, and only append the closing keyword after it
+                edits.emplace_back(lsp::TextEdit{{endOfLine, endOfLine}, "\n" + indent + closingKeyword});
+            }
             moveCursorUp = true;
         }
-        else if (params.position.line == document->lineCount() - 1 || !currentLineContent.empty())
+        else if (!currentLineContent.empty())
         {
-            LUAU_ASSERT(currentLineContent.empty());
-
-            // Insert the end/until onto the next line
-            lsp::Position position{params.position.line + 1, 0};
-            edits.emplace_back(lsp::TextEdit{{position, position}, indent + closingKeyword + "\n"});
+            // Original behavior: replace the line, keeping its content after the closing keyword
+            auto insertText = "\n" + indent + closingKeyword + currentLineContent + "\n";
+            edits.emplace_back(lsp::TextEdit{{{params.position.line, 0}, {params.position.line + 1, 0}}, insertText});
+            moveCursorUp = true;
         }
+        else
+        {
+            // Empty line in the middle of the file: insert the closing keyword on the next line
+            auto rawLine = document->getLine(params.position.line);
+            lsp::Position endOfLine{params.position.line, static_cast<uint32_t>(rawLine.size())};
+            lsp::Position nextLine{params.position.line + 1, 0};
+            edits.emplace_back(lsp::TextEdit{{nextLine, nextLine}, indent + closingKeyword + "\n"});
+
+            if (rawLine.size() <= indent.size())
+            {
+                // The new line was not indented by VS Code, so add one indent unit to it later
+                needsIndentUnit = true;
+                indentPosition = endOfLine;
+                pendingClosingText = "";
+            }
+        }
+    }
+
+    client->sendLogMessage(lsp::MessageType::Info, std::string("needsIndentUnit=") + (needsIndentUnit ? "yes" : "no"));
+
+    if (needsIndentUnit)
+    {
+        auto uri = params.textDocument.uri;
+        client->requestIndentSettings(uri,
+            [this, uri, edits, indentPosition, pendingClosingText, moveCursorUp](const std::string& unit) mutable
+            {
+                edits.emplace_back(lsp::TextEdit{{indentPosition, indentPosition}, unit + pendingClosingText});
+
+                std::unordered_map<Uri, std::vector<lsp::TextEdit>, UriHash> changes{{uri, edits}};
+                client->applyEdit({"insert end", {changes}},
+                    [this, moveCursorUp](auto) -> void
+                    {
+                        // At the end of the file we moved the cursor down, so go back up.
+                        // In the middle of the file the cursor is already on the line, so just go to its end.
+                        if (moveCursorUp)
+                            client->sendNotification("$/command", std::make_optional<json>({
+                                                                      {"command", "cursorMove"},
+                                                                      {"data", {{"to", "prevBlankLine"}}},
+                                                                  }));
+                        else
+                            client->sendNotification("$/command", std::make_optional<json>({{"command", "cursorEnd"}}));
+                    });
+            });
+        return;
     }
 
     if (!edits.empty())

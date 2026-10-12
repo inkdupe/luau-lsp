@@ -223,6 +223,40 @@ void LSPClient::requestConfiguration(const std::vector<lsp::DocumentUri>& uris)
     sendRequest(nextRequestId++, "workspace/configuration", lsp::ConfigurationParams{items}, handler);
 }
 
+void LSPClient::requestIndentSettings(const lsp::DocumentUri& uri, std::function<void(const std::string&)> callback)
+{
+    std::vector<lsp::ConfigurationItem> items{lsp::ConfigurationItem{uri, "editor"}};
+
+    ResponseHandler handler = [this, callback](const JsonRpcMessage& message)
+    {
+        // Fallback if the editor gives us something unexpected
+        std::string indent = "    ";
+
+        if (message.result && message.result->is_array() && !message.result->empty())
+        {
+            const auto& editor = (*message.result)[0];
+            if (editor.is_object())
+            {
+                int tabSize = 4;
+                if (editor.contains("tabSize") && editor["tabSize"].is_number_integer())
+                    tabSize = editor["tabSize"].get<int>();
+
+                bool insertSpaces = true;
+                if (editor.contains("insertSpaces") && editor["insertSpaces"].is_boolean())
+                    insertSpaces = editor["insertSpaces"].get<bool>();
+
+                indent = insertSpaces ? std::string(tabSize > 0 ? tabSize : 4, ' ') : "\t";
+            }
+        }
+
+        sendLogMessage(lsp::MessageType::Info, "indent unit has " + std::to_string(indent.size()) + " char(s), first is " +
+                                                   (indent[0] == '\t' ? "a tab" : "a space"));
+        callback(indent);
+    };
+
+    sendRequest(nextRequestId++, "workspace/configuration", lsp::ConfigurationParams{items}, handler);
+}
+
 void LSPClient::applyEdit(const lsp::ApplyWorkspaceEditParams& params, const std::optional<ResponseHandler>& handler)
 {
     sendRequest(nextRequestId++, "workspace/applyEdit", params, handler);
