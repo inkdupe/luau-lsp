@@ -61,7 +61,7 @@ static lsp::CompletionItem createSuggestService(const std::string& service, size
     item.insertText = service;
     item.sortText = SortText::AutoImports;
 
-    item.additionalTextEdits.emplace_back(textEdit);
+    item.additionalTextEdits = std::vector<lsp::TextEdit>{textEdit};
 
     return item;
 }

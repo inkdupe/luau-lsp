@@ -97,7 +97,7 @@ struct CompletionItem
     std::optional<InsertTextMode> insertTextMode = std::nullopt;
     std::optional<TextEdit> textEdit = std::nullopt;
     std::optional<std::string> textEditString = std::nullopt;
-    std::vector<TextEdit> additionalTextEdits{};
+    std::optional<std::vector<TextEdit>> additionalTextEdits = std::nullopt;
     std::optional<std::vector<std::string>> commitCharacters = std::nullopt;
     std::optional<Command> command = std::nullopt;
     // TODO: data?

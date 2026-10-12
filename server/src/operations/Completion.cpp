@@ -876,7 +876,7 @@ std::vector<lsp::CompletionItem> WorkspaceFolder::completion(const lsp::Completi
                     *insertText};
 
                 // TextEdit cannot replace the old text for some reason, so we need an additional edit
-                item.additionalTextEdits.emplace_back(
+                item.additionalTextEdits.emplace().emplace_back(
                     lsp::TextEdit{{textDocument->convertPosition(
                                        Luau::Position{containingString->location.begin.line, containingString->location.begin.column + 1}),
                                       textDocument->convertPosition(
@@ -899,7 +899,7 @@ std::vector<lsp::CompletionItem> WorkspaceFolder::completion(const lsp::Completi
 
                 // For some reason, the above text edit can't handle replacing the index operator
                 // Hence we remove it using an additional text edit
-                item.additionalTextEdits.emplace_back(lsp::TextEdit{
+                item.additionalTextEdits.emplace().emplace_back(lsp::TextEdit{
                     {textDocument->convertPosition(indexName->opPosition), {indexName->opPosition.line, indexName->opPosition.column + 1U}}, ""});
             }
         }
