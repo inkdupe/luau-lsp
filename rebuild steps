@@ -1,0 +1,17 @@
+1. developer window:
+cd C:\Users\User\Documents\luau-lsp\server\build && cmake --build . --target Luau.LanguageServer.CLI --config Release
+
+2. cmd:
+copy /Y "C:\Users\User\Documents\luau-lsp\server\build\Release\luau-lsp.exe" "C:\Users\User\Documents\luau-lsp\extension\bin\server.exe"
+
+3. cmd:
+cd C:\Users\User\Documents\luau-lsp\extension && npx vsce package
+
+4. restart the vscode window by using ctrl shift p reload
+
+
+SERVER + EXTENSION:
+cd C:\Users\User\Documents\luau-lsp\server\build && cmake --build . --target Luau.LanguageServer.CLI --config Release && copy /Y "C:\Users\User\Documents\luau-lsp\server\build\Release\luau-lsp.exe" "C:\Users\User\Documents\luau-lsp\extension\bin\server.exe" && cd C:\Users\User\Documents\luau-lsp\extension && npx vsce package && code --install-extension "C:\Users\User\Documents\luau-lsp\extension\luau-exploit-lsp-1.0.0.vsix" --force
+
+EXTENSION:
+cd C:\Users\User\Documents\luau-lsp\extension && npx vsce package && code --install-extension "C:\Users\User\Documents\luau-lsp\extension\luau-exploit-lsp-1.0.0.vsix" --force

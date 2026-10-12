@@ -528,6 +528,32 @@ Luau::LoadDefinitionFileResult WorkspaceFolder::loadDefinitionFile(
     platform->mutateRegisteredDefinitions(frontend.globals, metadata);
     platform->mutateRegisteredDefinitions(frontend.globalsForAutocomplete, metadata);
 
+    if (result.success && result.module)
+    {
+        client->sendLogMessage(lsp::MessageType::Info,
+            "nameLoop: package=" + packageName + " declaredGlobals=" + std::to_string(result.module->declaredGlobals.size()));
+
+        for (auto* globals : {&frontend.globals, &frontend.globalsForAutocomplete})
+        {
+            for (const auto& [name, _] : result.module->declaredGlobals)
+            {
+                auto it = globals->globalScope->bindings.find(Luau::Symbol{globals->globalNames.names->getOrAdd(name.c_str())});
+                if (it == globals->globalScope->bindings.end())
+                {
+                    client->sendLogMessage(lsp::MessageType::Info, "nameLoop: no binding for " + name);
+                    continue;
+                }
+
+                auto* ttv = Luau::getMutable<Luau::TableType>(it->second.typeId);
+                client->sendLogMessage(lsp::MessageType::Info,
+                    "nameLoop: " + name + " isTable=" + (ttv ? "yes" : "no") + " hasName=" + (ttv && ttv->name ? "yes" : "no"));
+
+                if (ttv && !ttv->name)
+                    ttv->name = "typeof(" + name + ")";
+            }
+        }
+    }
+
     if (result.success)
     {
         TextDocument textDocument(Uri(), "luau", 0, source);
@@ -627,6 +653,14 @@ void WorkspaceFolder::registerTypes(const std::vector<std::string>& disabledGlob
 
             // Display relevant diagnostics
             std::vector<lsp::Diagnostic> diagnostics;
+            for (auto& error : result.parseResult.errors)
+                client->sendLogMessage(lsp::MessageType::Error,
+                    "definitions parse error (" + packageName + ") line " + std::to_string(error.getLocation().begin.line + 1) + ": " + error.getMessage());
+
+            if (result.module)
+                for (auto& error : result.module->errors)
+                    client->sendLogMessage(lsp::MessageType::Error,
+                        "definitions type error (" + packageName + ") line " + std::to_string(error.location.begin.line + 1) + ": " + Luau::toString(error));
             for (auto& error : result.parseResult.errors)
                 diagnostics.emplace_back(createParseErrorDiagnostic(error));
 

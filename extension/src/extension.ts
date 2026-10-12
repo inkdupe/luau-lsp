@@ -321,7 +321,7 @@ const startLanguageServer = async (context: vscode.ExtensionContext) => {
   }
 
   addArg(
-    `--definitions:@custom=${vscode.Uri.joinPath(context.extensionUri, "typedefs", "custom.d.txt").fsPath}`,
+    `--definitions:@custom=${vscode.Uri.joinPath(context.extensionUri, "typedefs", "custom.d.luau").fsPath}`,
   );
 
   // Load extra documentation files
@@ -344,6 +344,10 @@ const startLanguageServer = async (context: vscode.ExtensionContext) => {
       );
     }
   }
+  
+  addArg(
+    `--docs=${vscode.Uri.joinPath(context.extensionUri, "typedefs", "custom.docs.json").fsPath}`,
+  );
 
   // Handle FFlags
   const fflags: FFlags = {};

@@ -1,0 +1,23 @@
+{
+  "@custom/global/Drawing": {
+    "documentation": "Provides the constructor for creating and controlling on-screen drawing objects.",
+    "keys": {
+        "new": "@luau/global/Drawing.new",
+        "Fonts": "@luau/global/Drawing.Fonts"
+    },
+    "learn_more_link": "",
+    "code_sample": ""
+  },
+  "@custom/global/Drawing.new": {
+    "documentation": "Returns a <code>Drawing</code> object of the specified type.",
+    "params": [
+        {
+            "name": "objectType",
+            "documentation": "The type of drawing object to create. Supported values are \"Line\", \"Text\", \"Circle\", \"Square\", \"Quad\", \"Triangle\" and \"Image\"."
+        }
+    ],
+    "returns": [],
+    "learn_more_link": "",
+    "code_sample": ""
+  }
+}
