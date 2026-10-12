@@ -264,11 +264,14 @@ void WorkspaceFolder::endAutocompletion(const lsp::CompletionParams& params)
         {
             // Empty line in the middle of the file: insert the closing keyword on the next line
             auto rawLine = document->getLine(params.position.line);
-            lsp::Position endOfLine{params.position.line, static_cast<uint32_t>(rawLine.size())};
+            size_t leadingWs = rawLine.find_first_not_of(" \t");
+            if (leadingWs == std::string::npos)
+                leadingWs = rawLine.size();
+            lsp::Position endOfLine{params.position.line, static_cast<uint32_t>(leadingWs)};
             lsp::Position nextLine{params.position.line + 1, 0};
             edits.emplace_back(lsp::TextEdit{{nextLine, nextLine}, indent + closingKeyword + "\n"});
 
-            if (rawLine.size() <= indent.size())
+            if (leadingWs <= indent.size())
             {
                 // The new line was not indented by VS Code, so add one indent unit to it later
                 needsIndentUnit = true;
