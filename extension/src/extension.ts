@@ -550,8 +550,12 @@ const startLanguageServer = async (context: vscode.ExtensionContext) => {
   platformContext.client = client;
 
   // Register commands
-  client.onNotification("$/command", (params) => {
-    vscode.commands.executeCommand(params.command, params.data);
+  client.onNotification("$/command", async (params) => {
+    await vscode.commands.executeCommand(params.command, params.data);
+    // After moving up to the blank line, place the cursor behind its indentation
+    if (params.data?.to === "prevBlankLine") {
+      await vscode.commands.executeCommand("cursorEnd");
+    }
   });
 
   clientDisposables.push(

@@ -224,14 +224,15 @@ void WorkspaceFolder::endAutocompletion(const lsp::CompletionParams& params)
         // If the position marker is at the very end of the file, if we insert one line further then vscode will
         // not be happy and will insert at the position marker.
         // If its in the middle of the file, vscode won't change the marker
-        if (params.position.line == document->lineCount() - 1 || !currentLineContent.empty())
+        if (currentLineContent.empty() && params.position.line == document->lineCount() - 1)
         {
-            // Insert an end/until at the current position, with a newline before it
-            auto insertText = "\n" + indent + closingKeyword + currentLineContent + "\n";
-            edits.emplace_back(lsp::TextEdit{{{params.position.line, 0}, {params.position.line + 1, 0}}, insertText});
+            // Keep the already indented cursor line, and only append the closing keyword after it
+            auto rawLine = document->getLine(params.position.line);
+            lsp::Position endOfLine{params.position.line, static_cast<uint32_t>(rawLine.size())};
+            edits.emplace_back(lsp::TextEdit{{endOfLine, endOfLine}, "\n" + indent + closingKeyword});
             moveCursorUp = true;
         }
-        else
+        else if (params.position.line == document->lineCount() - 1 || !currentLineContent.empty())
         {
             LUAU_ASSERT(currentLineContent.empty());
 
