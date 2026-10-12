@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Solution>
+	<Configurations>
+		<BuildType Name="Debug"/>
+		<BuildType Name="Release"/>
+		<BuildType Name="MinSizeRel"/>
+		<BuildType Name="RelWithDebInfo"/>
+		<Platform Name="x64"/>
+	</Configurations>
+	<Project Path="ALL_BUILD.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="50e9aeae-8a74-3555-aafc-b702b761cc94" DefaultStartup="true">
+		<BuildDependency Project="Luau.Analysis.vcxproj"/>
+		<BuildDependency Project="Luau.Analyze.CLI.vcxproj"/>
+		<BuildDependency Project="Luau.Ast.vcxproj"/>
+		<BuildDependency Project="Luau.Ast.CLI.vcxproj"/>
+		<BuildDependency Project="Luau.Bytecode.vcxproj"/>
+		<BuildDependency Project="Luau.Bytecode.CLI.vcxproj"/>
+		<BuildDependency Project="Luau.CLI.Test.vcxproj"/>
+		<BuildDependency Project="Luau.CLI.lib.vcxproj"/>
+		<BuildDependency Project="Luau.CodeGen.vcxproj"/>
+		<BuildDependency Project="Luau.Common.vcxproj"/>
+		<BuildDependency Project="Luau.Compile.CLI.vcxproj"/>
+		<BuildDependency Project="Luau.Compiler.vcxproj"/>
+		<BuildDependency Project="Luau.Config.vcxproj"/>
+		<BuildDependency Project="Luau.Conformance.vcxproj"/>
+		<BuildDependency Project="Luau.Inliner.vcxproj"/>
+		<BuildDependency Project="Luau.Reduce.CLI.vcxproj"/>
+		<BuildDependency Project="Luau.Repl.CLI.vcxproj"/>
+		<BuildDependency Project="Luau.Require.vcxproj"/>
+		<BuildDependency Project="Luau.UnitTest.vcxproj"/>
+		<BuildDependency Project="Luau.VM.vcxproj"/>
+		<BuildDependency Project="../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="isocline.vcxproj"/>
+		<Build Solution="Debug|*" Project="false"/>
+		<Build Solution="Release|*" Project="false"/>
+		<Build Solution="MinSizeRel|*" Project="false"/>
+		<Build Solution="RelWithDebInfo|*" Project="false"/>
+	</Project>
+	<Project Path="Luau.Analysis.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="d3221a28-8ab9-3d35-bac4-01e1e121093c">
+		<BuildDependency Project="Luau.Ast.vcxproj"/>
+		<BuildDependency Project="Luau.Bytecode.vcxproj"/>
+		<BuildDependency Project="Luau.Common.vcxproj"/>
+		<BuildDependency Project="Luau.Compiler.vcxproj"/>
+		<BuildDependency Project="Luau.Config.vcxproj"/>
+		<BuildDependency Project="Luau.VM.vcxproj"/>
+		<BuildDependency Project="../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="Luau.Analyze.CLI.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="882ac5ed-90c1-37f4-a9ff-dddd7c3bb727">
+		<BuildDependency Project="Luau.Analysis.vcxproj"/>
+		<BuildDependency Project="Luau.Ast.vcxproj"/>
+		<BuildDependency Project="Luau.Bytecode.vcxproj"/>
+		<BuildDependency Project="Luau.CLI.lib.vcxproj"/>
+		<BuildDependency Project="Luau.Common.vcxproj"/>
+		<BuildDependency Project="Luau.Compiler.vcxproj"/>
+		<BuildDependency Project="Luau.Config.vcxproj"/>
+		<BuildDependency Project="Luau.Require.vcxproj"/>
+		<BuildDependency Project="Luau.VM.vcxproj"/>
+		<BuildDependency Project="../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="Luau.Ast.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="78c0bc94-2c79-3e96-9bca-3d9b37e20702">
+		<BuildDependency Project="Luau.Common.vcxproj"/>
+		<BuildDependency Project="../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="Luau.Ast.CLI.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="fcc92d97-f56d-3954-b412-554f855ffa01">
+		<BuildDependency Project="Luau.Analysis.vcxproj"/>
+		<BuildDependency Project="Luau.Ast.vcxproj"/>
+		<BuildDependency Project="Luau.Bytecode.vcxproj"/>
+		<BuildDependency Project="Luau.CLI.lib.vcxproj"/>
+		<BuildDependency Project="Luau.Common.vcxproj"/>
+		<BuildDependency Project="Luau.Compiler.vcxproj"/>
+		<BuildDependency Project="Luau.Config.vcxproj"/>
+		<BuildDependency Project="Luau.VM.vcxproj"/>
+		<BuildDependency Project="../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="Luau.Bytecode.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="90721f85-dc41-32a2-9e1d-df0162da2590">
+		<BuildDependency Project="Luau.Common.vcxproj"/>
+		<BuildDependency Project="../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="Luau.Bytecode.CLI.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="e2e8cb9e-0bb6-3e90-af37-019c0119a70c">
+		<BuildDependency Project="Luau.Ast.vcxproj"/>
+		<BuildDependency Project="Luau.Bytecode.vcxproj"/>
+		<BuildDependency Project="Luau.CLI.lib.vcxproj"/>
+		<BuildDependency Project="Luau.CodeGen.vcxproj"/>
+		<BuildDependency Project="Luau.Common.vcxproj"/>
+		<BuildDependency Project="Luau.Compiler.vcxproj"/>
+		<BuildDependency Project="Luau.Config.vcxproj"/>
+		<BuildDependency Project="Luau.VM.vcxproj"/>
+		<BuildDependency Project="../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="Luau.CLI.Test.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="44b86110-e4c1-3bcc-a6ee-f71c20dd2d1c">
+		<BuildDependency Project="Luau.Ast.vcxproj"/>
+		<BuildDependency Project="Luau.Bytecode.vcxproj"/>
+		<BuildDependency Project="Luau.CLI.lib.vcxproj"/>
+		<BuildDependency Project="Luau.CodeGen.vcxproj"/>
+		<BuildDependency Project="Luau.Common.vcxproj"/>
+		<BuildDependency Project="Luau.Compiler.vcxproj"/>
+		<BuildDependency Project="Luau.Config.vcxproj"/>
+		<BuildDependency Project="Luau.Inliner.vcxproj"/>
+		<BuildDependency Project="Luau.Require.vcxproj"/>
+		<BuildDependency Project="Luau.VM.vcxproj"/>
+		<BuildDependency Project="../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="isocline.vcxproj"/>
+	</Project>
+	<Project Path="Luau.CLI.lib.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="5bd78c7f-ac29-39d2-a6f9-f01daf33c856">
+		<BuildDependency Project="Luau.Ast.vcxproj"/>
+		<BuildDependency Project="Luau.Bytecode.vcxproj"/>
+		<BuildDependency Project="Luau.Common.vcxproj"/>
+		<BuildDependency Project="Luau.Compiler.vcxproj"/>
+		<BuildDependency Project="Luau.Config.vcxproj"/>
+		<BuildDependency Project="Luau.VM.vcxproj"/>
+		<BuildDependency Project="../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="Luau.CodeGen.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="d9bf22a1-b3e9-35ff-86d0-118699a931e9">
+		<BuildDependency Project="Luau.Common.vcxproj"/>
+		<BuildDependency Project="Luau.VM.vcxproj"/>
+		<BuildDependency Project="../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="Luau.Common.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="64428582-6531-32cf-b844-c94274e1da0f">
+		<BuildDependency Project="../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="Luau.Compile.CLI.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="13c5f776-a4d7-3ff8-a031-2a52bdbb6544">
+		<BuildDependency Project="Luau.Ast.vcxproj"/>
+		<BuildDependency Project="Luau.Bytecode.vcxproj"/>
+		<BuildDependency Project="Luau.CLI.lib.vcxproj"/>
+		<BuildDependency Project="Luau.CodeGen.vcxproj"/>
+		<BuildDependency Project="Luau.Common.vcxproj"/>
+		<BuildDependency Project="Luau.Compiler.vcxproj"/>
+		<BuildDependency Project="Luau.Config.vcxproj"/>
+		<BuildDependency Project="Luau.VM.vcxproj"/>
+		<BuildDependency Project="../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="Luau.Compiler.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="3916345d-d9c9-3922-b802-c5e9de4927a6">
+		<BuildDependency Project="Luau.Ast.vcxproj"/>
+		<BuildDependency Project="Luau.Bytecode.vcxproj"/>
+		<BuildDependency Project="Luau.Common.vcxproj"/>
+		<BuildDependency Project="../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="Luau.Config.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="3a55d29f-2dd6-3628-996d-a79cd01147d2">
+		<BuildDependency Project="Luau.Ast.vcxproj"/>
+		<BuildDependency Project="Luau.Bytecode.vcxproj"/>
+		<BuildDependency Project="Luau.Common.vcxproj"/>
+		<BuildDependency Project="Luau.Compiler.vcxproj"/>
+		<BuildDependency Project="Luau.VM.vcxproj"/>
+		<BuildDependency Project="../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="Luau.Conformance.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="54434aed-29ec-3854-a35f-c2dae3cd5c1c">
+		<BuildDependency Project="Luau.Analysis.vcxproj"/>
+		<BuildDependency Project="Luau.Ast.vcxproj"/>
+		<BuildDependency Project="Luau.Bytecode.vcxproj"/>
+		<BuildDependency Project="Luau.CodeGen.vcxproj"/>
+		<BuildDependency Project="Luau.Common.vcxproj"/>
+		<BuildDependency Project="Luau.Compiler.vcxproj"/>
+		<BuildDependency Project="Luau.Config.vcxproj"/>
+		<BuildDependency Project="Luau.Inliner.vcxproj"/>
+		<BuildDependency Project="Luau.VM.vcxproj"/>
+		<BuildDependency Project="../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="Luau.GoldenTest.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="b7112651-00cf-3938-b1b7-80c6ecd5f131">
+		<BuildDependency Project="Luau.Analyze.CLI.vcxproj"/>
+		<BuildDependency Project="Luau.Repl.CLI.vcxproj"/>
+		<BuildDependency Project="../ZERO_CHECK.vcxproj"/>
+		<Build Solution="Debug|*" Project="false"/>
+		<Build Solution="Release|*" Project="false"/>
+		<Build Solution="MinSizeRel|*" Project="false"/>
+		<Build Solution="RelWithDebInfo|*" Project="false"/>
+	</Project>
+	<Project Path="Luau.Inliner.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="ac6abdc8-b6bc-35dd-9d7c-4dd82c756f50">
+		<BuildDependency Project="Luau.Bytecode.vcxproj"/>
+		<BuildDependency Project="Luau.Common.vcxproj"/>
+		<BuildDependency Project="Luau.VM.vcxproj"/>
+		<BuildDependency Project="../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="Luau.Reduce.CLI.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="1f342074-51b0-32e3-abe8-8c749d3a0114">
+		<BuildDependency Project="Luau.Analysis.vcxproj"/>
+		<BuildDependency Project="Luau.Ast.vcxproj"/>
+		<BuildDependency Project="Luau.Bytecode.vcxproj"/>
+		<BuildDependency Project="Luau.CLI.lib.vcxproj"/>
+		<BuildDependency Project="Luau.Common.vcxproj"/>
+		<BuildDependency Project="Luau.Compiler.vcxproj"/>
+		<BuildDependency Project="Luau.Config.vcxproj"/>
+		<BuildDependency Project="Luau.VM.vcxproj"/>
+		<BuildDependency Project="../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="Luau.Repl.CLI.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="6e5a3733-4bae-3d61-8abb-adaa8dd44178">
+		<BuildDependency Project="Luau.Ast.vcxproj"/>
+		<BuildDependency Project="Luau.Bytecode.vcxproj"/>
+		<BuildDependency Project="Luau.CLI.lib.vcxproj"/>
+		<BuildDependency Project="Luau.CodeGen.vcxproj"/>
+		<BuildDependency Project="Luau.Common.vcxproj"/>
+		<BuildDependency Project="Luau.Compiler.vcxproj"/>
+		<BuildDependency Project="Luau.Config.vcxproj"/>
+		<BuildDependency Project="Luau.Inliner.vcxproj"/>
+		<BuildDependency Project="Luau.Require.vcxproj"/>
+		<BuildDependency Project="Luau.VM.vcxproj"/>
+		<BuildDependency Project="../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="isocline.vcxproj"/>
+	</Project>
+	<Project Path="Luau.Require.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="ca267d0e-7836-3b6d-954b-b5b1ea6c92ab">
+		<BuildDependency Project="Luau.Ast.vcxproj"/>
+		<BuildDependency Project="Luau.Bytecode.vcxproj"/>
+		<BuildDependency Project="Luau.Common.vcxproj"/>
+		<BuildDependency Project="Luau.Compiler.vcxproj"/>
+		<BuildDependency Project="Luau.Config.vcxproj"/>
+		<BuildDependency Project="Luau.VM.vcxproj"/>
+		<BuildDependency Project="../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="Luau.UnitTest.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="9d6df8ac-672b-3efe-973b-6c28c9317793">
+		<BuildDependency Project="Luau.Analysis.vcxproj"/>
+		<BuildDependency Project="Luau.Ast.vcxproj"/>
+		<BuildDependency Project="Luau.Bytecode.vcxproj"/>
+		<BuildDependency Project="Luau.CodeGen.vcxproj"/>
+		<BuildDependency Project="Luau.Common.vcxproj"/>
+		<BuildDependency Project="Luau.Compiler.vcxproj"/>
+		<BuildDependency Project="Luau.Config.vcxproj"/>
+		<BuildDependency Project="Luau.VM.vcxproj"/>
+		<BuildDependency Project="../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="Luau.VM.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="61883efc-514a-3303-b2f4-c690d546f666">
+		<BuildDependency Project="Luau.Common.vcxproj"/>
+		<BuildDependency Project="../ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="../ZERO_CHECK.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="78ca1f95-8534-327b-b488-f9563db91be3"/>
+	<Project Path="isocline.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="3a08d7fa-9150-38a2-a974-8f307aa02e70">
+		<BuildDependency Project="../ZERO_CHECK.vcxproj"/>
+	</Project>
+</Solution>

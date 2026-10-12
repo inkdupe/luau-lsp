@@ -1,0 +1,10 @@
+^C:\USERS\USER\DOCUMENTS\LUAU-LSP\SERVER\LUAU\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/User/Documents/luau-lsp/server -BC:/Users/User/Documents/luau-lsp/server/build --check-stamp-file C:/Users/User/Documents/luau-lsp/server/build/luau/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

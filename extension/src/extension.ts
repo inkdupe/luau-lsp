@@ -321,7 +321,7 @@ const startLanguageServer = async (context: vscode.ExtensionContext) => {
   }
 
   addArg(
-    `--definitions:@custom=${vscode.Uri.joinPath(context.extensionUri, "typedefs", "custom.d.luau").fsPath}`,
+    `--definitions:@custom=${vscode.Uri.joinPath(context.extensionUri, "typedefs", "custom.d.txt").fsPath}`,
   );
 
   // Load extra documentation files
@@ -577,15 +577,6 @@ const startLanguageServer = async (context: vscode.ExtensionContext) => {
   clientDisposables.push(...registerComputeCodeGen(context, client));
   clientDisposables.push(...registerRequireGraph(context, client));
   clientDisposables.push(...registerViewInternalSource(context, client));
-  clientDisposables.push(
-    vscode.commands.registerCommand("luau-lsp.openWalkthrough", () => {
-      return vscode.commands.executeCommand(
-        "workbench.action.openWalkthrough",
-        "veser.luau-lsp#getting-started",
-        false,
-      );
-    }),
-  );
   clientDisposables.push(
     vscode.commands.registerCommand("luau-lsp.updateApi", async () => {
       await downloadExternalFiles(result.externalFiles);

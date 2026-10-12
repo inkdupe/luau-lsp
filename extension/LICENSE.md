@@ -1,0 +1,1 @@
+nothing cus i dont want the stupid "LICENSE.md, LICENSE.txt or LICENSE not found" warning when packaging the extension

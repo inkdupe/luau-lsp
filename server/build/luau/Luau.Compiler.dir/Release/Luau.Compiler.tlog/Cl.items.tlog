@@ -1,0 +1,9 @@
+C:\Users\User\Documents\luau-lsp\server\luau\Compiler\src\Compiler.cpp;C:\Users\User\Documents\luau-lsp\server\build\luau\Luau.Compiler.dir\Release\Compiler.obj
+C:\Users\User\Documents\luau-lsp\server\luau\Compiler\src\Builtins.cpp;C:\Users\User\Documents\luau-lsp\server\build\luau\Luau.Compiler.dir\Release\Builtins.obj
+C:\Users\User\Documents\luau-lsp\server\luau\Compiler\src\BuiltinFolding.cpp;C:\Users\User\Documents\luau-lsp\server\build\luau\Luau.Compiler.dir\Release\BuiltinFolding.obj
+C:\Users\User\Documents\luau-lsp\server\luau\Compiler\src\ConstantFolding.cpp;C:\Users\User\Documents\luau-lsp\server\build\luau\Luau.Compiler.dir\Release\ConstantFolding.obj
+C:\Users\User\Documents\luau-lsp\server\luau\Compiler\src\CostModel.cpp;C:\Users\User\Documents\luau-lsp\server\build\luau\Luau.Compiler.dir\Release\CostModel.obj
+C:\Users\User\Documents\luau-lsp\server\luau\Compiler\src\TableShape.cpp;C:\Users\User\Documents\luau-lsp\server\build\luau\Luau.Compiler.dir\Release\TableShape.obj
+C:\Users\User\Documents\luau-lsp\server\luau\Compiler\src\Types.cpp;C:\Users\User\Documents\luau-lsp\server\build\luau\Luau.Compiler.dir\Release\Types.obj
+C:\Users\User\Documents\luau-lsp\server\luau\Compiler\src\ValueTracking.cpp;C:\Users\User\Documents\luau-lsp\server\build\luau\Luau.Compiler.dir\Release\ValueTracking.obj
+C:\Users\User\Documents\luau-lsp\server\luau\Compiler\src\lcode.cpp;C:\Users\User\Documents\luau-lsp\server\build\luau\Luau.Compiler.dir\Release\lcode.obj

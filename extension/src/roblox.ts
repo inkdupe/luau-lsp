@@ -73,7 +73,7 @@ const globalTypesUri = (
     return vscode.Uri.joinPath(
       context.extensionUri,
       "..",
-      "..",
+      "server",
       `scripts/globalTypes.${securityLevel}.d.luau`,
     );
   }
