@@ -199,6 +199,18 @@ std::optional<Luau::AutocompleteEntryMap> RobloxPlatform::completionCallback(
 
         return result;
     }
+    else if (tag == "FiltergcTypes")
+    {
+        static const char* filtergcTypes[] = {"function", "table"};
+
+        Luau::AutocompleteEntryMap result;
+        for (const char* name : filtergcTypes)
+            result.insert_or_assign(name,
+                Luau::AutocompleteEntry{Luau::AutocompleteEntryKind::String, workspaceFolder->frontend.builtinTypes->stringType, false, false,
+                    Luau::TypeCorrectKind::Correct});
+
+        return result;
+    }
 
     return std::nullopt;
 }

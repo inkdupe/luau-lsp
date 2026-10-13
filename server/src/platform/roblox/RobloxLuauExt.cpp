@@ -810,6 +810,12 @@ void RobloxPlatform::mutateRegisteredDefinitions(Luau::GlobalTypes& globals, std
                             if (std::find(ftv->tags.begin(), ftv->tags.end(), "DrawingTypes") == ftv->tags.end())
                                 ftv->tags.push_back("DrawingTypes");
 
+    // Attach onto filtergc() so its string argument autocompletes
+    if (auto filtergcGlobal = globals.globalScope->lookup(Luau::AstName("filtergc")))
+        if (auto ftv = Luau::getMutable<Luau::FunctionType>(Luau::follow(filtergcGlobal.value())))
+            if (std::find(ftv->tags.begin(), ftv->tags.end(), "FiltergcTypes") == ftv->tags.end())
+                ftv->tags.push_back("FiltergcTypes");
+
     // Move Enums over as imported type bindings
     std::unordered_map<Luau::Name, Luau::TypeFun> enumTypes{};
     for (auto it = globals.globalScope->exportedTypeBindings.begin(); it != globals.globalScope->exportedTypeBindings.end();)
