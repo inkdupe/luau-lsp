@@ -1,5 +1,7 @@
 #include "Platform/RobloxPlatform.hpp"
 
+#include "LSP/StringArgCompletions.hpp"
+
 #include "Luau/BuiltinDefinitions.h"
 #include "Luau/ConstraintSolver.h"
 #include "Luau/TypeInfer.h"
@@ -810,11 +812,15 @@ void RobloxPlatform::mutateRegisteredDefinitions(Luau::GlobalTypes& globals, std
                             if (std::find(ftv->tags.begin(), ftv->tags.end(), "DrawingTypes") == ftv->tags.end())
                                 ftv->tags.push_back("DrawingTypes");
 
-    // Attach onto filtergc() so its string argument autocompletes
-    if (auto filtergcGlobal = globals.globalScope->lookup(Luau::AstName("filtergc")))
-        if (auto ftv = Luau::getMutable<Luau::FunctionType>(Luau::follow(filtergcGlobal.value())))
-            if (std::find(ftv->tags.begin(), ftv->tags.end(), "FiltergcTypes") == ftv->tags.end())
-                ftv->tags.push_back("FiltergcTypes");
+    // custom auto completions
+    for (const auto& [funcName, values] : stringArgCompletions())
+        if (auto binding = globals.globalScope->lookup(Luau::AstName(funcName.c_str())))
+            if (auto ftv = Luau::getMutable<Luau::FunctionType>(Luau::follow(binding.value())))
+            {
+                auto tag = stringArgTag(funcName);
+                if (std::find(ftv->tags.begin(), ftv->tags.end(), tag) == ftv->tags.end())
+                    ftv->tags.push_back(tag);
+            }
 
     // Move Enums over as imported type bindings
     std::unordered_map<Luau::Name, Luau::TypeFun> enumTypes{};

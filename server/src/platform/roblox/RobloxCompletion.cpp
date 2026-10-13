@@ -4,6 +4,7 @@
 #include "LuauFileUtils.hpp"
 
 #include "LSP/Completion.hpp"
+#include "LSP/StringArgCompletions.hpp"
 
 #include "Platform/AutoImports.hpp"
 #include "Platform/InstanceRequireAutoImporter.hpp"
@@ -199,12 +200,14 @@ std::optional<Luau::AutocompleteEntryMap> RobloxPlatform::completionCallback(
 
         return result;
     }
-    else if (tag == "FiltergcTypes")
+    else if (tag.rfind("StringArg:", 0) == 0)
     {
-        static const char* filtergcTypes[] = {"function", "table"};
+        auto it = stringArgCompletions().find(tag.substr(10));
+        if (it == stringArgCompletions().end())
+            return std::nullopt;
 
         Luau::AutocompleteEntryMap result;
-        for (const char* name : filtergcTypes)
+        for (const auto& name : it->second)
             result.insert_or_assign(name,
                 Luau::AutocompleteEntry{Luau::AutocompleteEntryKind::String, workspaceFolder->frontend.builtinTypes->stringType, false, false,
                     Luau::TypeCorrectKind::Correct});
