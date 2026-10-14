@@ -15,6 +15,47 @@
 
 LUAU_FASTFLAG(LuauSolverV2)
 
+namespace
+{
+// True if the cursor is inside the call `fn(...)` on this line, at argument number argIndex (0-based)
+bool isArgumentOfCall(const std::string& line, size_t cursor, const std::string& fn, size_t argIndex)
+{
+    std::string prefix = line.substr(0, std::min(cursor, line.size()));
+    auto pos = prefix.rfind(fn + "(");
+    if (pos == std::string::npos)
+        return false;
+
+    int depth = 0;
+    size_t commas = 0;
+    char inString = 0;
+    for (size_t i = pos + fn.size() + 1; i < prefix.size(); ++i)
+    {
+        char ch = prefix[i];
+        if (inString)
+        {
+            if (ch == '\\')
+                ++i;
+            else if (ch == inString)
+                inString = 0;
+            continue;
+        }
+        if (ch == '"' || ch == '\'')
+            inString = ch;
+        else if (ch == '(' || ch == '{' || ch == '[')
+            ++depth;
+        else if (ch == ')' || ch == '}' || ch == ']')
+        {
+            if (depth == 0)
+                return false; // the call was already closed
+            --depth;
+        }
+        else if (ch == ',' && depth == 0)
+            ++commas;
+    }
+    return !inString && commas == argIndex;
+}
+} // namespace
+
 // Distinguishes a real broken expression (e.g. an unterminated `BrokenString` lexeme spans
 // the offending content) from a synthesized "missing expression" error (zero-width location
 // at a token boundary, produced when the parser expected an expression but found nothing).
@@ -796,6 +837,13 @@ std::vector<lsp::CompletionItem> WorkspaceFolder::completion(const lsp::Completi
     if (!textDocument)
         throw JsonRpcException(lsp::ErrorCode::RequestFailed, "No managed text document for " + params.textDocument.uri.toString());
 
+    // "," and " " are only trigger characters for the filtergc boolean list; ignore them everywhere else
+    if (params.context && (params.context->triggerCharacter == "," || params.context->triggerCharacter == " "))
+    {
+        if (!isArgumentOfCall(textDocument->getLine(params.position.line), params.position.character, "filtergc", 2))
+            return {};
+    }
+
     std::unordered_set<std::string> tags;
 
     auto stringCompletionCB = [&](const std::string& tag, std::optional<const Luau::ExternType*> ctx,
@@ -863,6 +911,17 @@ std::vector<lsp::CompletionItem> WorkspaceFolder::completion(const lsp::Completi
         throwIfCancelled(cancellationToken);
 
         result = Luau::autocomplete(frontend, moduleName, position, stringCompletionCB);
+    }
+
+    // Only suggest true/false for the third argument of filtergc
+    if (isArgumentOfCall(textDocument->getLine(params.position.line), params.position.character, "filtergc", 2))
+    {
+        Luau::AutocompleteEntryMap onlyBooleans;
+        for (const char* name : {"true", "false"})
+            onlyBooleans.insert_or_assign(name,
+                Luau::AutocompleteEntry{Luau::AutocompleteEntryKind::Keyword, frontend.builtinTypes->booleanType, false, false,
+                    Luau::TypeCorrectKind::Correct});
+        result.entryMap = std::move(onlyBooleans);
     }
 
     std::vector<lsp::CompletionItem> items{};
@@ -1096,6 +1155,20 @@ std::vector<lsp::CompletionItem> WorkspaceFolder::completion(const lsp::Completi
                     if (!typeReference->prefix)
                         suggestImports(moduleName, position, config, *textDocument, items, /* completingTypeReferencePrefix: */ true);
         }
+    }
+    
+    // Final pass: for the third argument of filtergc, keep only true/false and sort them first
+    if (isArgumentOfCall(textDocument->getLine(params.position.line), params.position.character, "filtergc", 2))
+    {
+        items.erase(std::remove_if(items.begin(), items.end(),
+                        [](const lsp::CompletionItem& item)
+                        {
+                            return item.label != "true" && item.label != "false";
+                        }),
+            items.end());
+
+        for (auto& item : items)
+            item.sortText = "0000" + item.label;
     }
 
     return items;

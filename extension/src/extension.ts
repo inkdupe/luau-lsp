@@ -39,14 +39,7 @@ import {
   shouldFetchDefinitions,
 } from "./definitions";
 
-export type PlatformContext = { client: LanguageClient | undefined };
-export type AddArgCallback = (
-  argument: string,
-  mode?: "All" | "Prod" | "Debug",
-) => void;
-
 let client: LanguageClient | undefined = undefined;
-let platformContext: PlatformContext = { client: undefined };
 const clientDisposables: vscode.Disposable[] = [];
 
 const CURRENT_FFLAGS =
@@ -551,8 +544,6 @@ const startLanguageServer = async (context: vscode.ExtensionContext) => {
     clientOptions,
   );
 
-  platformContext.client = client;
-
   // Register commands
   client.onNotification("$/command", async (params) => {
     await vscode.commands.executeCommand(params.command, params.data);
@@ -607,8 +598,6 @@ const startLanguageServer = async (context: vscode.ExtensionContext) => {
 
 export async function activate(context: vscode.ExtensionContext) {
   console.log("Luau LSP activated");
-
-  await roblox.onActivate(platformContext, context);
 
   context.subscriptions.push(
     vscode.commands.registerCommand("luau-lsp.reloadServer", async () => {
@@ -669,13 +658,10 @@ export async function activate(context: vscode.ExtensionContext) {
   );
 
   await startLanguageServer(context);
-
-  await roblox.postLanguageServerStart(platformContext, context);
 }
 
 export async function deactivate() {
   return Promise.allSettled([
-    ...roblox.onDeactivate(),
     client?.stop(),
     clientDisposables.map((disposable) => disposable.dispose()),
   ]);
